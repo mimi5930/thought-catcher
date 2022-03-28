@@ -12,7 +12,12 @@ const userController = {
 
 	getUserById(req, res) {
 		User.findById(req.params.id)
-			.then(dbUserData => res.json(dbUserData))
+			.then(dbUserData => {
+				if (!dbUserData) {
+					res.status(404).json({ message: 'No User found with this ID' });
+				}
+				res.json(dbUserData);
+			})
 			.catch(err => {
 				res.status(400).json(err);
 			});
