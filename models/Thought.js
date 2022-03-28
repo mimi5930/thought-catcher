@@ -39,7 +39,7 @@ const ThoughtSchema = new Schema(
 		createdAt: {
 			type: Date,
 			default: Date.now()
-			// create getter function for format the timestamp on query
+			// TODO create getter function for format the timestamp on query
 		},
 		username: {
 			type: String,
