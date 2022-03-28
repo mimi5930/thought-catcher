@@ -15,6 +15,7 @@ const userController = {
 			});
 	},
 
+	// get a user by Id
 	getUserById(req, res) {
 		User.findById(req.params.id)
 			.populate({
@@ -37,6 +38,7 @@ const userController = {
 			});
 	},
 
+	// post new user
 	createUser(req, res) {
 		User.create(req.body)
 			.then(dbUserData => res.json(dbUserData))

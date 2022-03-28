@@ -10,6 +10,7 @@ const thoughtsController = {
 			});
 	},
 
+	// get a thought by id
 	getThoughtbyId(req, res) {
 		Thought.findById(req.params.id)
 			.then(dbThoughtData => {
@@ -25,6 +26,7 @@ const thoughtsController = {
 			});
 	},
 
+	// post new thought
 	createThought(req, res) {
 		Thought.create(req.body)
 			.then(dbThoughtData => {
@@ -45,6 +47,7 @@ const thoughtsController = {
 			});
 	},
 
+	// update thought data
 	updateThought(req, res) {
 		Thought.findByIdAndUpdate(req.params.id, req.body, {
 			new: true,
@@ -63,6 +66,7 @@ const thoughtsController = {
 			});
 	},
 
+	// delete thought
 	deleteThought(req, res) {
 		Thought.findByIdAndDelete(req.params.id)
 			.then(dbThoughtData => {
