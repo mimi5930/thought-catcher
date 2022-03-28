@@ -39,6 +39,7 @@ const userController = {
 	},
 
 	// delete User
+	// TODO Delete user's associated thoughts when deleted
 	deleteUser({ params }, res) {
 		User.deleteOne({ _id: params.id })
 			.then(dbUserData => res.json(dbUserData))
