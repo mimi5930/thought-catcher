@@ -14,14 +14,18 @@ const UserSchema = new Schema(
 			unique: true
 			// email match validation
 		},
-		thoughts: {
-			// ids referencing Thought model
-			// type: Schema.Types.ObjectId,
-			// ref: 'Thought'
-		},
-		friends: {
-			// ids referencing User model (self-reference)
-		}
+		thoughts: [
+			{
+				// ids referencing Thought model
+				// type: Schema.Types.ObjectId,
+				// ref: 'Thought'
+			}
+		],
+		friends: [
+			{
+				// ids referencing User model (self-reference)
+			}
+		]
 	},
 	{
 		toJSON: {
