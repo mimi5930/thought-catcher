@@ -40,8 +40,41 @@ const userController = {
 
 	// delete User
 	// TODO Delete user's associated thoughts when deleted
-	deleteUser({ params }, res) {
-		User.deleteOne({ _id: params.id })
+	deleteUser(req, res) {
+		User.deleteOne({ _id: req.params.id })
+			.then(dbUserData => res.json(dbUserData))
+			.catch(err => {
+				res.status(400).json(err);
+			});
+	},
+
+	// add friend
+	addFriend(req, res) {
+		User.findOneAndUpdate(
+			{ _id: req.params.userId },
+			{ $push: { friends: req.params.friendId } },
+			{ new: true, runValidators: true }
+		)
+			.then(dbUserData => {
+				if (!dbUserData) {
+					res.status(404).json({ message: 'No User found with this ID' });
+				}
+				res.json(dbUserData);
+			})
+			.catch(err => {
+				res.status(400).json(err);
+			});
+	},
+
+	// remove friend
+	removeFriend(req, res) {
+		User.findOneAndUpdate(
+			{ _id: req.params.userId },
+			{
+				$pull: { friends: req.params.friendId }
+			},
+			{ new: true, runValidators: true }
+		)
 			.then(dbUserData => res.json(dbUserData))
 			.catch(err => {
 				res.status(400).json(err);
