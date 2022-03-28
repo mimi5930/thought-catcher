@@ -26,6 +26,18 @@ const userController = {
 			});
 	},
 
+	// update User Data
+	updateUser(req, res) {
+		User.findOneAndUpdate({ id: req.params.id }, req.body, {
+			new: true,
+			runValidators: true
+		})
+			.then(dbUserData => res.json(dbUserData))
+			.catch(err => {
+				res.status(400).json(err);
+			});
+	},
+
 	// delete User
 	deleteUser({ params }, res) {
 		User.deleteOne({ _id: params.id })
