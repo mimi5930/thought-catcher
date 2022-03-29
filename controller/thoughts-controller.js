@@ -82,6 +82,46 @@ const thoughtsController = {
 			.catch(err => {
 				res.status(400).json(err);
 			});
+	},
+
+	// Post a reaction
+	addReaction(req, res) {
+		Thought.findOneAndUpdate(
+			{ _id: req.params.thoughtId },
+			{
+				$push: { reactions: req.body }
+			},
+			{
+				new: true,
+				runValidators: true
+			}
+		)
+			.then(dbReactionData => {
+				if (!dbReactionData) {
+					res.status(404).json({ message: `No thought found with this Id` });
+				}
+				res.json(dbReactionData);
+			})
+			.catch(err => {
+				res.status(400).json(err);
+			});
+	},
+
+	// remove Reaction
+	removeReaction(req, res) {
+		Thought.findOneAndUpdate(
+			{ _id: req.params.thoughtId },
+			{
+				$pull: { reactions: { reactionId: req.params.reactionId } }
+			},
+			{ new: true }
+		)
+			.then(dbReactionData => {
+				res.json(dbReactionData);
+			})
+			.catch(err => {
+				res.json(err);
+			});
 	}
 };
 
