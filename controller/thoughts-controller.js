@@ -114,7 +114,7 @@ const thoughtsController = {
 		Thought.findOneAndUpdate(
 			{ _id: req.params.thoughtId },
 			{
-				$pull: { reactions: { reactionId: req.params.reactionId } }
+				$pull: { reactions: { reactionId: req.body.reactionId } }
 			},
 			{ new: true }
 		)
