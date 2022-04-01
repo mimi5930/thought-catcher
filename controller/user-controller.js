@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 const userController = {
 	// get all Users
@@ -60,13 +60,17 @@ const userController = {
 	},
 
 	// delete User
-	// TODO Delete user's associated thoughts when deleted
-	deleteUser(req, res) {
-		User.deleteOne({ _id: req.params.id })
-			.then(dbUserData => res.json(dbUserData))
-			.catch(err => {
-				res.status(400).json(err);
+	async deleteUser(req, res) {
+		try {
+			const UserData = await User.findOne({ _id: req.params.id });
+			const deleteUser = await User.deleteOne({ _id: req.params.id });
+			const deleteThoughts = await Thought.deleteMany({
+				username: UserData.username
 			});
+			res.json({ deleteUser, deleteThoughts });
+		} catch (error) {
+			res.status(400).json(err);
+		}
 	},
 
 	// add friend
